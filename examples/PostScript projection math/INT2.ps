@@ -1,0 +1,376 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 841 595
+%%HiResBoundingBox: 0 0 841.89 595.28
+%%Title: WGS84 Mercator grid at 1/5000 scale and 60-00 N latitude
+%%Routing: Karte 62T
+%%For: Arne Johannessen
+%%Creator: Arne Johannessen
+%%CreationDate: 2011-10-24
+%%Copyright: Public Domain
+%%Pages: 1
+%%Orientation: Landscape
+%%DocumentMedia: (A4) 841.89 595.28 0 () ()
+%%+ (ISOA4) 841 595 0 () ()
+%%LanguageLevel: 2
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginDefaults
+%%PageMedia: (ISOA4)
+%%EndDefaults
+%%BeginProlog
+
+
+% ===== Constants, Units, Unit Conversions =====
+
+/pi 3.141592653589793 def
+
+/mm { 72 mul 25.4 div } def
+/m {} def
+/deg {} def
+
+/min { 60 div add } def
+/sec { 3600 div add } def
+/toRad { 180 div pi mul } def
+
+
+%%EndProlog
+%%BeginSetup
+50 dict begin
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+/pgsave save def
+22.95 mm 21.42 mm translate
+%%EndPageSetup
+
+
+% ===== Map Parameters =====
+
+/neatline { 0.127 mm setlinewidth 0 setgray 2 setlinecap } def
+/graticule { 0.127 mm setlinewidth 0 setgray 0 setlinecap } def
+/tickMarks { graticule } def
+/mapborder { 1 mm setlinewidth 0 setgray 2 setlinecap } def
+
+/borderWidth { 11 mm } def
+/degreeTickMark { borderWidth } def  % at 1' intervals
+/intermediateTickMark { 3 mm } def  % at 0.1' intervals
+/minuteTickMark { 1.5 mm } def  % at 1" intervals
+/subdivisionTickMark { 0.8 mm } def  % at 0.1" intervals
+
+/meridianFirst { 5 deg 48.15 min } def
+/meridianLast { 5 deg 49.5 min } def
+/parallelFirst { 60 deg 0.35 min } def
+/parallelLast { 60 deg 0.80 min } def
+
+
+% ===== Projection Math =====
+
+/scale { 1 5000 div } def
+/trueScaleLatitude { 60 deg 0 min } def
+
+% WGS 84 ellipsoid
+/majorRadius { 6378137 m } def
+/flattening { 1 298.257223563 div } def
+
+/longitude { 7-6 atMapScale meridianFirst 7-6 atMapScale sub } def
+/latitude { 7-7a atMapScale parallelFirst 7-7a atMapScale sub } def
+
+/7-6 {
+toRad majorRadius mul
+trueScaleLatitude 7-8 div
+} def
+
+/eccentricityTimesSineOfLatitude { sin eccentricitySquared sqrt mul } def
+
+/7-7 {
+dup 2 div 45 add tan exch
+dup eccentricityTimesSineOfLatitude 1 exch sub exch
+eccentricityTimesSineOfLatitude 1 add
+div
+eccentricitySquared sqrt 2 div
+exp
+mul ln majorRadius mul
+trueScaleLatitude 7-8 div
+} def
+
+/7-7a {
+/sinphi exch sin def
+1 sinphi add 1 sinphi sub div
+1 eccentricitySquared sqrt sinphi mul sub
+1 eccentricitySquared sqrt sinphi mul add
+div eccentricitySquared sqrt exp
+mul ln majorRadius 2 div mul
+trueScaleLatitude 7-8 div
+} def
+
+%/7-7b {
+%/sinphi exch sin def
+%1 sinphi add ln 1 sinphi sub ln sub
+%1 eccentricitySquared sqrt sinphi mul sub ln
+%1 eccentricitySquared sqrt sinphi mul add ln
+%sub eccentricitySquared sqrt mul
+%add
+%majorRadius 2 div mul
+%trueScaleLatitude 7-8 div
+%} def
+
+/7-8 {
+dup sin2 eccentricitySquared mul 1 exch sub exch
+cos
+div
+} def
+
+/sin2 { dup sin exch sin mul } def
+/tan { dup sin exch cos div } def
+/eccentricitySquared { flattening 2 mul flattening dup mul sub } def
+/atMapScale { scale mul 1000 mm mul } def
+
+
+% ===== Border =====
+
+%%BeginObject: (Border)
+
+newpath
+0 borderWidth sub 0 borderWidth sub moveto
+0 parallelLast latitude borderWidth 2 mul add rlineto
+meridianLast longitude borderWidth 2 mul add 0 rlineto
+meridianLast longitude borderWidth add 0 borderWidth sub lineto
+0 borderWidth sub 0 borderWidth sub lineto
+mapborder stroke
+
+%%EndObject
+
+
+% ===== Neatline =====
+
+%%BeginObject: (Neatline)
+
+newpath
+0 0 moveto
+0 parallelLast latitude lineto
+meridianLast longitude parallelLast latitude lineto
+meridianLast longitude 0 lineto
+0 0 lineto
+neatline stroke
+
+%%EndObject
+
+
+% ===== Tick Marks =====
+
+%** latitude [map coordinates] length drawLatitudeTickMark -
+%** uses: meridianLast longitude
+/drawLatitudeTickMark {
+dup 0 exch sub 2 index moveto
+dup 0 rlineto
+meridianLast longitude 0 rmoveto
+0 rlineto
+pop
+} def
+
+%** longitude [map coordinates] length drawLongitudeTickMark -
+%** uses: parallelLast latitude
+/drawLongitudeTickMark {
+exch 0 2 index sub moveto
+dup 0 exch rlineto
+0 parallelLast latitude rmoveto
+0 exch rlineto
+} def
+
+%%BeginObject: (TickMarks)
+
+/latitudeTickMarks { [
+60 deg 0 min 21 sec latitude minuteTickMark
+60 deg 0 min 22 sec latitude minuteTickMark
+60 deg 0 min 23 sec latitude minuteTickMark
+60 deg 0 min 24 sec latitude intermediateTickMark
+60 deg 0 min 25 sec latitude minuteTickMark
+60 deg 0 min 26 sec latitude minuteTickMark
+60 deg 0 min 27 sec latitude minuteTickMark
+60 deg 0 min 28 sec latitude minuteTickMark
+60 deg 0 min 29 sec latitude minuteTickMark
+60 deg 0 min 30 sec latitude   degreeTickMark
+60 deg 0 min 31 sec latitude minuteTickMark
+60 deg 0 min 32 sec latitude minuteTickMark
+60 deg 0 min 33 sec latitude minuteTickMark
+60 deg 0 min 34 sec latitude minuteTickMark
+60 deg 0 min 35 sec latitude minuteTickMark
+60 deg 0 min 36 sec latitude intermediateTickMark
+60 deg 0 min 37 sec latitude minuteTickMark
+60 deg 0 min 38 sec latitude minuteTickMark
+60 deg 0 min 39 sec latitude minuteTickMark
+60 deg 0 min 40 sec latitude minuteTickMark
+60 deg 0 min 41 sec latitude minuteTickMark
+60 deg 0 min 42 sec latitude intermediateTickMark
+60 deg 0 min 43 sec latitude minuteTickMark
+60 deg 0 min 44 sec latitude minuteTickMark
+60 deg 0 min 45 sec latitude minuteTickMark
+60 deg 0 min 46 sec latitude minuteTickMark
+60 deg 0 min 47 sec latitude minuteTickMark
+60 deg 0 min 48 sec latitude intermediateTickMark
+] } def
+
+%** - drawLatitudeTickMarks -
+%** uses: latitudeTickMarks tickMarks
+/drawLatitudeTickMarks {
+newpath
+0 2 latitudeTickMarks length 2 sub {
+dup latitudeTickMarks exch get
+exch 1 add latitudeTickMarks exch get
+drawLatitudeTickMark
+} for
+tickMarks stroke
+} def
+
+drawLatitudeTickMarks
+
+/longitudeTickMarks { [
+5 deg 48 min  9 sec longitude minuteTickMark
+5 deg 48 min 10 sec longitude minuteTickMark
+5 deg 48 min 11 sec longitude minuteTickMark
+5 deg 48 min 12 sec longitude intermediateTickMark
+5 deg 48 min 13 sec longitude minuteTickMark
+5 deg 48 min 14 sec longitude minuteTickMark
+5 deg 48 min 15 sec longitude minuteTickMark
+5 deg 48 min 16 sec longitude minuteTickMark
+5 deg 48 min 17 sec longitude minuteTickMark
+5 deg 48 min 18 sec longitude intermediateTickMark
+5 deg 48 min 19 sec longitude minuteTickMark
+5 deg 48 min 20 sec longitude minuteTickMark
+5 deg 48 min 21 sec longitude minuteTickMark
+5 deg 48 min 22 sec longitude minuteTickMark
+5 deg 48 min 23 sec longitude minuteTickMark
+5 deg 48 min 24 sec longitude intermediateTickMark
+5 deg 48 min 25 sec longitude minuteTickMark
+5 deg 48 min 26 sec longitude minuteTickMark
+5 deg 48 min 27 sec longitude minuteTickMark
+5 deg 48 min 28 sec longitude minuteTickMark
+5 deg 48 min 29 sec longitude minuteTickMark
+5 deg 48 min 30 sec longitude   degreeTickMark
+5 deg 48 min 31 sec longitude minuteTickMark
+5 deg 48 min 32 sec longitude minuteTickMark
+5 deg 48 min 33 sec longitude minuteTickMark
+5 deg 48 min 34 sec longitude minuteTickMark
+5 deg 48 min 35 sec longitude minuteTickMark
+5 deg 48 min 36 sec longitude intermediateTickMark
+5 deg 48 min 37 sec longitude minuteTickMark
+5 deg 48 min 38 sec longitude minuteTickMark
+5 deg 48 min 39 sec longitude minuteTickMark
+5 deg 48 min 40 sec longitude minuteTickMark
+5 deg 48 min 41 sec longitude minuteTickMark
+5 deg 48 min 42 sec longitude intermediateTickMark
+5 deg 48 min 43 sec longitude minuteTickMark
+5 deg 48 min 44 sec longitude minuteTickMark
+5 deg 48 min 45 sec longitude minuteTickMark
+5 deg 48 min 46 sec longitude minuteTickMark
+5 deg 48 min 47 sec longitude minuteTickMark
+5 deg 48 min 48 sec longitude intermediateTickMark
+5 deg 48 min 49 sec longitude minuteTickMark
+5 deg 48 min 50 sec longitude minuteTickMark
+5 deg 48 min 51 sec longitude minuteTickMark
+5 deg 48 min 52 sec longitude minuteTickMark
+5 deg 48 min 53 sec longitude minuteTickMark
+5 deg 48 min 54 sec longitude intermediateTickMark
+5 deg 48 min 55 sec longitude minuteTickMark
+5 deg 48 min 56 sec longitude minuteTickMark
+5 deg 48 min 57 sec longitude minuteTickMark
+5 deg 48 min 58 sec longitude minuteTickMark
+5 deg 48 min 59 sec longitude minuteTickMark
+5 deg 49 min  0 sec longitude   degreeTickMark
+5 deg 49 min  1 sec longitude minuteTickMark
+5 deg 49 min  2 sec longitude minuteTickMark
+5 deg 49 min  3 sec longitude minuteTickMark
+5 deg 49 min  4 sec longitude minuteTickMark
+5 deg 49 min  5 sec longitude minuteTickMark
+5 deg 49 min  6 sec longitude intermediateTickMark
+5 deg 49 min  7 sec longitude minuteTickMark
+5 deg 49 min  8 sec longitude minuteTickMark
+5 deg 49 min  9 sec longitude minuteTickMark
+5 deg 49 min 10 sec longitude minuteTickMark
+5 deg 49 min 11 sec longitude minuteTickMark
+5 deg 49 min 12 sec longitude intermediateTickMark
+5 deg 49 min 13 sec longitude minuteTickMark
+5 deg 49 min 14 sec longitude minuteTickMark
+5 deg 49 min 15 sec longitude minuteTickMark
+5 deg 49 min 16 sec longitude minuteTickMark
+5 deg 49 min 17 sec longitude minuteTickMark
+5 deg 49 min 18 sec longitude intermediateTickMark
+5 deg 49 min 19 sec longitude minuteTickMark
+5 deg 49 min 20 sec longitude minuteTickMark
+5 deg 49 min 21 sec longitude minuteTickMark
+5 deg 49 min 22 sec longitude minuteTickMark
+5 deg 49 min 23 sec longitude minuteTickMark
+5 deg 49 min 24 sec longitude intermediateTickMark
+5 deg 49 min 25 sec longitude minuteTickMark
+5 deg 49 min 26 sec longitude minuteTickMark
+5 deg 49 min 27 sec longitude minuteTickMark
+5 deg 49 min 28 sec longitude minuteTickMark
+5 deg 49 min 29 sec longitude minuteTickMark
+5 deg 49 min 30 sec longitude   degreeTickMark
+] } def
+
+%** - drawLongitudeTickMarks -
+%** uses: longitudeTickMarks tickMarks
+/drawLongitudeTickMarks {
+newpath
+0 2 longitudeTickMarks length 2 sub {
+dup longitudeTickMarks exch get
+exch 1 add longitudeTickMarks exch get
+drawLongitudeTickMark
+} for
+tickMarks stroke
+} def
+
+drawLongitudeTickMarks
+
+%%EndObject
+
+
+% ===== Graticule =====
+
+/drawParallel {
+0 exch moveto
+meridianLast longitude 0 rlineto
+} def
+
+/drawMeridian {
+0 moveto
+0 parallelLast latitude rlineto
+} def
+
+%%BeginObject: (Graticule)
+
+/parallels { [
+60 deg 0.5 min latitude
+] } def
+
+/drawParallels {
+newpath
+parallels { drawParallel } forall
+graticule stroke
+} def
+
+drawParallels
+
+/meridians { [
+5 deg 48.5 min longitude
+5 deg 49.0 min longitude
+] } def
+
+/drawMeridians {
+newpath
+meridians { drawMeridian } forall
+graticule stroke
+} def
+
+drawMeridians
+
+%%EndObject
+
+
+%%PageTrailer
+pgsave restore
+showpage
+%%Trailer
+end
+%%EOF

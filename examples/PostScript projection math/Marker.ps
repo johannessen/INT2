@@ -1,0 +1,167 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 842 595
+%%HiResBoundingBox: 0 0 841.7 595.
+%%Title: WGS84 Mercator grid at 1/5000 scale and 60-00 N latitude
+%%Routing: Test / grossmassstaebige Karte
+%%For: Arne Johannessen
+%%Creator: Arne Johannessen
+%%CreationDate: 2011-10-24
+%%Copyright: Public Domain
+%%Pages: 1
+%%Orientation: Landscape
+%%DocumentMedia: (A4) 841.7 595. 0 () ()
+%%+ (Mosaik) 842 595 0 () ()
+%%LanguageLevel: 2
+%%DocumentData: Clean7Bit
+%%EndComments
+%%BeginDefaults
+%%PageMedia: (Mosaik)
+%%EndDefaults
+%%BeginProlog
+
+% ===== Constants, Units, Unit Conversions =====
+
+/pi 3.141592653589793 def
+
+/mm { 72 mul 25.4 div } def
+/m {} def
+/deg {} def
+
+/min { 60 div add } def
+/sec { 3600 div add } def
+/toRad { 180 div pi mul } def
+
+%%EndProlog
+%%BeginSetup
+50 dict begin
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+/pgsave save def
+23 mm 21 mm translate
+%%EndPageSetup
+
+
+% ===== Map and Projection Parameters =====
+
+/graticule { 0.4 mm setlinewidth 0 setgray 2 setlinecap } def
+
+/meridianFirst { 5 deg 48.15 min longitude } def
+/meridianLast { 5 deg 49.5 min longitude } def
+
+/parallelFirst { 60 deg 0.35 min latitude } def
+/parallelLast { 60 deg 0.80 min latitude } def
+
+/scale { 1 5000 div } def
+/trueScaleLatitude { 60 deg 0 min } def
+
+% WGS 84 ellipsoid
+/majorRadius { 6378137 m } def
+/flattening { 1 298.257223563 div } def
+
+
+% ===== Projection Math =====
+
+/longitude { 7-6 atMapScale } def
+/latitude { 7-7 atMapScale } def
+/position { parallelFirst sub exch meridianFirst sub exch } def
+
+/7-6 {
+toRad majorRadius mul
+trueScaleLatitude 7-8 div
+} def
+
+/eccentricityTimesSineOfLatitude { sin eccentricitySquared sqrt mul } def
+
+/7-7 {
+dup 2 div 45 add tan exch
+dup eccentricityTimesSineOfLatitude 1 exch sub exch
+eccentricityTimesSineOfLatitude 1 add
+div
+eccentricitySquared sqrt 2 div
+exp
+mul ln majorRadius mul
+trueScaleLatitude 7-8 div
+} def
+
+/7-8 {
+dup sin2 eccentricitySquared mul 1 exch sub exch
+cos
+div
+} def
+
+
+% ===== Supplemental Math =====
+
+/sin2 { dup sin exch sin mul } def
+/tan { dup sin exch cos div } def
+/eccentricitySquared { flattening 2 mul flattening dup mul sub } def
+/atMapScale { scale mul 1000 mm mul } def
+
+
+% ===== Markers =====
+
+%%BeginObject: (Markers)
+
+/strokeMarkers { 0.02 mm setlinewidth 0 setgray 2 setlinecap stroke } def
+/markerFont { /Helvetica findfont 1 scalefont setfont } def
+/showMarkerAnnotation { .05 mm .1 mm rmoveto markerFont show } def
+
+/setMarker {
+parallelFirst sub exch meridianFirst sub exch moveto
+-.6 mm 0 rmoveto 1.2 mm 0 rlineto
+-.6 mm -.6 mm rmoveto 0 1.2 mm rlineto
+0 -.6 mm rmoveto
+.05 mm .1 mm rmoveto markerFont show
+} def
+
+
+% ===== Marker Data =====
+
+% Job 1183 Features
+newpath
+(JS2) 5.814696 deg longitude 60.008855 deg latitude setMarker
+(JS4 1.5m) 5.816229 deg longitude 60.010196 deg latitude setMarker
+(R1 2.8m) 5.816036 deg longitude 60.010559 deg latitude setMarker
+(R2N 0.1m) 5.814678 deg longitude 60.009982 deg latitude setMarker
+(R2S -0.1m) 5.814535 deg longitude 60.009903 deg latitude setMarker
+(R3 1.1m) 5.814752 deg longitude 60.010615 deg latitude setMarker
+(R4N -0.7m) 5.813793 deg longitude 60.010085 deg latitude setMarker
+(R4S -0.9m) 5.813797 deg longitude 60.009952 deg latitude setMarker
+(R5C1 -0.3m) 5.813680 deg longitude 60.010231 deg latitude setMarker
+(R5C2 -0.7m) 5.813748 deg longitude 60.010256 deg latitude setMarker
+(R5N -0.7m) 5.813880 deg longitude 60.010415 deg latitude setMarker
+(R6 -0.2m) 5.814100 deg longitude 60.010553 deg latitude setMarker
+(R7 -0.7m) 5.814515 deg longitude 60.008852 deg latitude setMarker
+strokeMarkers
+
+newpath
+5.81401 deg longitude 60.01054 deg latitude position moveto
+5.81441 deg longitude 60.01039 deg latitude position lineto
+5.81455 deg longitude 60.01028 deg latitude position lineto
+5.81446 deg longitude 60.01006 deg latitude position lineto
+5.81415 deg longitude 60.00997 deg latitude position lineto
+5.81384 deg longitude 60.00999 deg latitude position lineto
+5.81344 deg longitude 60.01015 deg latitude position lineto
+5.81364 deg longitude 60.01032 deg latitude position lineto
+5.81401 deg longitude 60.01054 deg latitude position lineto
+(Drying 1) showMarkerAnnotation strokeMarkers
+newpath
+5.81459 deg longitude 60.00892 deg latitude position moveto
+5.81471 deg longitude 60.00885 deg latitude position lineto
+5.81468 deg longitude 60.00877 deg latitude position lineto
+5.81428 deg longitude 60.00864 deg latitude position lineto
+5.81391 deg longitude 60.00862 deg latitude position lineto
+5.81428 deg longitude 60.00883 deg latitude position lineto
+5.81459 deg longitude 60.00892 deg latitude position lineto
+(Drying 2) showMarkerAnnotation strokeMarkers
+
+%%EndObject
+
+
+%%PageTrailer
+pgsave restore
+showpage
+%%Trailer
+end
+%%EOF

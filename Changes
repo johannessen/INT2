@@ -1,0 +1,37 @@
+0.53, 2018-04-20
+
+ - convert into a Dist::Zilla-compatible module
+
+0.52, 2016-06-26
+
+ - fit for chart 17
+ - add ShapeFile code
+
+0.51, 2015-10-11
+
+ - fit for job 1533
+ - introduce INT2::Point abstraction
+
+0.40, 2015-07
+
+ - GeoPDF support
+
+0.30, 2014-07
+
+ - fit for chart 61
+
+0.21, 2012-04
+
+ - fit for chart 62
+
+0.05, 2012-02
+
+ - fit for chart 12B
+
+0.02, 2011-10
+
+ - replace PostScript projection math with Geo::Proj
+
+0.01, 2010-06
+
+ - PostScript projection math

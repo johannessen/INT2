@@ -1,0 +1,12 @@
+# Dist::Zilla
+/.build/
+/INT2-*
+/Makefile.PL
+/MANIFEST
+/META.json
+/README
+
+/t/author-pod-syntax.t
+
+/Stuff
+
