@@ -47,8 +47,8 @@ sub init {
 	
 	$self->{mapWidth} = $self->{meridianLast} - $self->{meridianFirst};
 	$self->{mapHeight} = $self->{parallelLast} - $self->{parallelFirst};
-	$self->{translationX} = ($chart->{paperWidth} - $self->{mapWidth}) / 2;
-	$self->{translationY} = ($chart->{paperHeight} - $self->{mapHeight}) / 2;
+	$self->{translationX} = ($chart->{paperWidth} - $self->{mapWidth}) / 2 + $chart->{offset}->[0];
+	$self->{translationY} = ($chart->{paperHeight} - $self->{mapHeight}) / 2 + $chart->{offset}->[1];
 	$self->{edgeTranslationY} = $chart->{suppressUpperEdge} ? $style->{outerEdgeWidth} / 2 * 80 / 100 : 0;  # 80/100: empirical value
 	
 	$self->{neatlineLocalSouth} = ($self->{translationY} + $self->{edgeTranslationY}) / $chart->{paperHeight};
@@ -322,6 +322,7 @@ sub frameHead {
 	
 	my $intermediateTickMarkLength = defined $style->{dicing} ? 3.5 : 3;
 	my $minuteTickMarkLength = defined $style->{dicing} ? 2 : 1.5;
+	my $borderWidth = $chart->{borderWidth};
 	
 	my @postScript = <<"ENDPS";
 
@@ -354,7 +355,7 @@ neg 0 rmoveto
 /borderStroke { 1 mm } def
 /mapborder { borderStroke setlinewidth setColor 2 setlinecap } def
 
-/borderWidth { 11 mm } def
+/borderWidth { $borderWidth mm } def
 /degreeTickMark { 4 mm } def
 /intermediateTickMark { $intermediateTickMarkLength mm } def
 /minuteTickMark { $minuteTickMarkLength mm } def

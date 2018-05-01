@@ -75,14 +75,18 @@ sub init {
 	$self->{paperWidth} = $options->{paperWidth} || 1189;
 	$self->{paperHeight} = $options->{paperHeight} || 841;
 	
-	# outer borders
+	# borders
 	$self->{chartNumber} = $options->{number} || '';
 	$self->{suppressUpperEdge} = ! $options->{borderUpperEdge};
+	$self->{borderWidth} = $options->{borderWidth} // 11;  # millimetres
 	
 	# special-case "intermediate" label texts
 	$self->{noIntermediateLabels} = $options->{noIntermediateLabels};
 	$self->{intermediateLatitudeLabels} = $options->{intermediateLatitudeLabels};
 	$self->{intermediateLongitudeLabels} = $options->{intermediateLongitudeLabels};
+	
+	# move map to specific position [x, y] on paper sheet (millimetres)
+	$self->{offset} = $options->{offset} || [0, 0];
 	
 	return $self;
 }
