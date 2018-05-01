@@ -511,15 +511,14 @@ ENDPS
 
 sub border {
 	my ($self) = @_;
-	my ($chart, $style) = $self->chartAndStyle;
 	
-	my $chartNumber = $chart->{chartNumber};
-	my $edgeSize = $style->{outerEdgeWidth};
+	return ($self->outerBorder, $self->neatline, $self->borderTicks, $self->chartNumber);
+}
+
+
+sub outerBorder {
+	my ($self) = @_;
 	
-	if (! $chart->{cornerSouthWest} || ! $chart->{cornerNorthEast}) { die 'I need to know all map corner coordinates'; }
-	my $cornerSouthWest = $chart->{cornerSouthWest}->in('geo');
-	my $cornerNorthEast = $chart->{cornerNorthEast}->in('geo');
-		
 	my @postScript = <<"ENDPS";
 
 % ===== Border =====
@@ -536,6 +535,17 @@ mapborder stroke
 
 %%EndObject
 
+ENDPS
+	
+	return @postScript;
+}
+
+
+sub neatline {
+	my ($self) = @_;
+	my ($chart, $style) = $self->chartAndStyle;
+	
+	my @postScript = <<"ENDPS";
 
 % ===== Neatline and Graduation =====
 
@@ -591,6 +601,21 @@ ENDPS
 	push @postScript, <<"ENDPS";
 %%EndObject
 
+ENDPS
+	
+	return @postScript;
+}
+
+
+sub borderTicks {
+	my ($self) = @_;
+	my ($chart, $style) = $self->chartAndStyle;
+	
+	if (! $chart->{cornerSouthWest} || ! $chart->{cornerNorthEast}) { die 'I need to know all map corner coordinates'; }
+	my $cornerSouthWest = $chart->{cornerSouthWest}->in('geo');
+	my $cornerNorthEast = $chart->{cornerNorthEast}->in('geo');
+		
+	my @postScript = <<"ENDPS";
 
 % ===== Dicing =====
 
@@ -759,6 +784,20 @@ tickMarks stroke
 
 %%EndObject
 
+ENDPS
+	
+	return @postScript;
+}
+
+
+sub chartNumber {
+	my ($self) = @_;
+	my ($chart, $style) = $self->chartAndStyle;
+	
+	my $chartNumber = $chart->{chartNumber};
+	my $edgeSize = $style->{outerEdgeWidth};
+	
+	my @postScript = <<"ENDPS";
 
 % ===== Chart Number =====
 
