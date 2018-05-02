@@ -14,6 +14,6 @@ Installation
 
  1. `git clone https://github.com/johannessen/INT2 && cd INT2`
  1. `dzil build` (requires [Dist::Zilla][])
- 1. `cpanm <archive>.tar.gz`
+ 1. `cpanm INT2-*.tar.gz`
 
 [Dist::Zilla]: https://metacpan.org/release/Dist-Zilla

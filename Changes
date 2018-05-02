@@ -1,3 +1,7 @@
+0.54, 2018-05-01
+
+ - fit for chart 64
+
 0.53, 2018-04-20
 
  - convert into a Dist::Zilla-compatible module

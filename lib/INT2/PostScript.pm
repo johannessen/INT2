@@ -250,6 +250,7 @@ sub minimalFrame {
 	chomp (my $user = `whoami`);
 	my $year = POSIX::strftime '%Y', localtime;
 	
+	my $version = $INT2::PostScript::VERSION // "DEV";
 	my @postScript = <<"ENDPS";
 %!PS-Adobe-3.0 EPSF-3.0
 %%BoundingBox: 0 0 $paperWidthIntPt $paperHeightIntPt
@@ -257,7 +258,7 @@ sub minimalFrame {
 %%Title: Chart $chartNumber
 %%Routing: PostScript Mercator grid
 %%For: $user
-%%Creator: INT2::PostScript $INT2::PostScript::VERSION, Arne Johannessen
+%%Creator: INT2::PostScript $version, Arne Johannessen
 %%CreationDate: $year
 %%Copyright: Public Domain
 %%Pages: 1
