@@ -13,7 +13,6 @@ use Data::Dumper qw();
 use Carp qw();
 use POSIX qw();
 
-use Geo::Point qw();
 use Math::Round qw();
 
 use INT2::Chart;

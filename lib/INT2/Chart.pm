@@ -13,10 +13,6 @@ use Data::Dumper qw();
 use Carp qw();
 use POSIX qw();
 
-use Geo::Proj4 qw();  # this module is not mentioned in the code; is there a reason for this?
-use Geo::Proj qw();
-use Geo::Point qw();
-
 use INT2::Point;
 use INT2::PostScript;
 
@@ -130,10 +126,12 @@ sub createProj4Nick {
 		$markovNick .= $nextProj4NickId++;
 		$self->{projnick}->{$nick} = $markovNick;
 	}
-	
-	Geo::Proj->new(nick => $markovNick, proj4 => $proj4);
-	# nick and proj are automatically stored in a cache inside Geo::Proj
-	# known mis-feature (AKA 'bug') in Geo::Proj: that cache is immutable
+	$INT::Point::proj->{$markovNick} = $proj4;
+	# The "MARKOV nick" is a relic of Geo::Proj; it needed to be globally
+	# unique, while the standard nick might repeat itself with different
+	# values over the lifetime of Geo::Proj. Therefore we have one level
+	# of indirection here. This could be simplified now that we've dropped
+	# Geo::Proj entirely in favour of Geo::LibProj::*.
 }
 
 
@@ -145,16 +143,14 @@ sub newGeoPoint {
 		$projNick = $self->{projnick}->{$projNick} || die;
 	}
 	
-	# $point may be a definition string, a lat/lon coordinate array or a Geo::Point instance
-	if (! ref $point) {
+	# $point must be a lat/lon coordinate array
+	if (ref $point eq 'ARRAY') {
 #	warn Data::Dumper::Dumper($self->{projnick});
 		Carp::confess 'illegal state: initialise map datums first!' unless $self->{projnick};
-		$point = INT2::Point->wrap( Geo::Point->fromString($point, $projNick), $self->{projnick} );
+		$point = INT2::Point->wrap( [$point->[1], $point->[0]], $self->{projnick}, $projNick );  # reversed order!
 	}
-	elsif (ref $point eq 'ARRAY') {
-#	warn Data::Dumper::Dumper($self->{projnick});
-		Carp::confess 'illegal state: initialise map datums first!' unless $self->{projnick};
-		$point = INT2::Point->wrap( Geo::Point->latlong(@$point, $projNick), $self->{projnick} );
+	else {
+		Carp::confess "Point format '" . ref($point) . "' unimplemented";
 	}
 	
 	return $point;
