@@ -67,7 +67,7 @@ sub style {
 	
 	if (! $self->{style}) {
 		my $scale = $self->scale;
-		$self->{style} = 'INT2::Style::R';  # officially only for scale <= 1 / 80_000
+		$self->{style} = 'INT2::Style::R';  # officially only for scale >= 1 / 80_000
 		$self->{style} = 'INT2::Style::Q' if $scale > 1 / 50_001;
 		$self->{style} = 'INT2::Style::P' if $scale > 1 / 30_001;
 		$self->{style} = 'INT2::Style::O' if $scale > 1 / 12_501;
