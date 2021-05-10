@@ -79,6 +79,12 @@ sub writeChart {
 	close $fh2;
 	
 	
+	$filename = 'scalebar.svg';
+	open(my $fh3, '>', $filename) or die "Could not create file '$filename', $!";
+	print $fh3 INT2::Scalebar->new({ scale => 25_000 })->svg->xmlify;
+	close $fh3;
+	
+	
 	# :BUG: assumes WGS84
 # 	push @json_features, Geo::JSON::Feature->new({
 # 		geometry => Geo::JSON::Polygon->new({ coordinates => [[
